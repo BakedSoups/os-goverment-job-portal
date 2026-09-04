@@ -29,3 +29,25 @@ func TestMatcherRequiresEnterpriseContextForArchitecture(t *testing.T) {
 		t.Fatalf("technical architecture did not match enterprise_architecture: %#v", technical)
 	}
 }
+
+func TestMatcherMapsFrameworksAndToolsToCanonicalSkills(t *testing.T) {
+	matcher := NewMatcher()
+	hits := matcher.Match("Built Django APIs served by Uvicorn, stored data in PostgreSQL, and deployed containers with Docker.")
+
+	for _, concept := range []string{"python", "sql", "devops"} {
+		if hits[concept] == 0 {
+			t.Errorf("expected %q canonical concept match, got %#v", concept, hits)
+		}
+	}
+}
+
+func TestMatcherDoesNotPromoteGenericWordsToDomainSkills(t *testing.T) {
+	matcher := NewMatcher()
+	hits := matcher.Match("Maintain a software application and protect the property of its users.")
+
+	for _, concept := range []string{"facilities_maintenance", "real_estate_property"} {
+		if hits[concept] != 0 {
+			t.Errorf("generic text unexpectedly matched %q: %#v", concept, hits)
+		}
+	}
+}

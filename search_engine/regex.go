@@ -51,14 +51,21 @@ func isQueryOnlyAlias(alias string) bool {
 		"analytics",
 		"architecture",
 		"budget",
+		"clinical",
+		"facilities",
 		"finance",
+		"go",
 		"infrastructure",
 		"leadership",
+		"maintenance",
 		"management",
 		"manager",
 		"operations",
+		"property",
 		"programs",
-		"resilience":
+		"react",
+		"resilience",
+		"spring":
 		return true
 	default:
 		return false
